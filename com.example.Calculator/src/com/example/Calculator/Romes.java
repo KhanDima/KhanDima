@@ -1,3 +1,4 @@
+package com.example.Calculator;
 
 public class Romes extends Number {
     private String romes_value1;
@@ -5,7 +6,7 @@ public class Romes extends Number {
     private int romes_value1_int;
     private int romes_value2_int;
     private int result_int;
-    private String sign = "";
+    private String k = "";
     private String result_string;
     final String[] roman_letters_9 = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
             "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
@@ -26,37 +27,67 @@ public class Romes extends Number {
         if (ostatok != 0) {
             return convert_result_to_Romes(n - ostatok, 0) + roman_letters_9[ostatok - 1];
         }
-        return sign;
+        return k;
     }
 
     @Override
-    public void sum() {
-        result_int = romes_value1_int + romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
-    }
-
-    @Override
-    public void sub() {
-        result_int = romes_value1_int - romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
-    }
-
-    @Override
-    public void div() {
-        try {
-            result_int = romes_value1_int / romes_value2_int;
+    public void sum() throws NumberException {
+        while (true) {
+            result_int = romes_value1_int + romes_value2_int;
             result_string = convert_result_to_Romes(result_int, result_int);
-        } catch (ArithmeticException e) {
-            System.out.print("Проверьте правильность ввода римских цифр. Вероятно введены и арабские и римские одновременно. ");
-            return;
+            if (romes_value1_int < 1 || romes_value1_int>10 || romes_value2_int < 1 || romes_value2_int > 10){
+                throw new NumberException("Введите число от I до X");
+            }
+            System.out.println("Ответ" + " " + result_string);
+            System.exit(1);
+        }
+
+
+    }
+    @Override
+    public void sub() throws NumberException {
+        while (true) {
+            result_int = romes_value1_int - romes_value2_int;
+            result_string = convert_result_to_Romes(result_int, result_int);
+            if (romes_value1_int < 1 || romes_value1_int>10 || romes_value2_int < 1 || romes_value2_int > 10){
+                throw new NumberException("Введите число от I до X");
+            }
+            System.out.println("Ответ" + " " + result_string);
+            System.exit(1);
         }
 
     }
 
     @Override
-    public void mul() {
-        result_int = romes_value1_int * romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
+    public void div() throws NumberException {
+        //Я мог сделать так, но легче было в switch case )
+        //  try {
+        while (true) {
+            result_int = romes_value1_int / romes_value2_int;
+            result_string = convert_result_to_Romes(result_int, result_int);
+            if (romes_value1_int < 1 || romes_value1_int>10 || romes_value2_int < 1 || romes_value2_int > 10){
+                throw new NumberException("Введите число от I до X");
+            }
+            System.out.println("Ответ" + " " + result_string);
+            System.exit(1);
+        }
+        //} catch (ArithmeticException e) {
+        //  System.out.print("Проверьте правильность ввода римских цифр. Вероятно введены и арабские и римские одновременно. ");
+        //return;
+        //}
+    }
+
+    @Override
+    public void mul() throws NumberException {
+        while (true) {
+            result_int = romes_value1_int * romes_value2_int;
+            result_string = convert_result_to_Romes(result_int, result_int);
+            if (romes_value1_int < 1 || romes_value1_int>10 || romes_value2_int < 1 || romes_value2_int > 10){
+                throw new NumberException("Введите число от I до X");
+            }
+            System.out.println("Ответ" + " " + result_string);
+            System.exit(1);
+        }
     }
 
     @Override
@@ -71,31 +102,19 @@ public class Romes extends Number {
         char[] value_char = romes_value.toCharArray();
         int[] values_int = new int[value_char.length];
         for (int i = 0; i < value_char.length; i++) {
-            switch (value_char[i]) {
-                case 'I':
-                    values_int[i] = 1;
-                    break;
-                case 'V':
-                    values_int[i] = 5;
-                    break;
-                case 'X':
-                    values_int[i] = 10;
-                    break;
-                case 'L':
-                    values_int[i] = 50;
-                    break;
-                case 'C':
-                    values_int[i] = 100;
-                    break;
-
-                default:
-                    System.out.println("Содержится неверный символ. Проверьте правильность ввода римских цифр:" + "\n" +
-                            "I = 1" + "\n" +
-                            "V = 5" + "\n" +
-                            "X = 10" + "\n" +
-                            "L = 50" + "\n" +
-                            "C = 100");
-                    break;
+            if (value_char[i] == 'I') {
+                values_int[i] = 1;
+            } else if (value_char[i] == 'V') {
+                values_int[i] = 5;
+            } else if (value_char[i] == 'X') {
+                values_int[i] = 10;
+            } else if (value_char[i] == 'L') {
+                values_int[i] = 50;
+            } else if (value_char[i] == 'C') {
+                values_int[i] = 100;
+            }else {
+                System.out.println("Используются одновременно разные системы счисления");
+                System.exit(1);
             }
         }
         int result = values_int[0];
